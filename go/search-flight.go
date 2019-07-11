@@ -10,6 +10,12 @@ import "encoding/json"
 
 import "./Database"
 
+// flight info
+type FlightInfo struct {
+	Code string
+	Date string
+}
+
 type SearchFlightResponse struct {
 	Flight []FlightInfo
 }
@@ -47,7 +53,6 @@ func searchFlight(w http.ResponseWriter, r *http.Request) {
 			date string
 		)
 		rows.Scan(&code, &date)
-		fmt.Println(code)
 		response.Flight = append(response.Flight, FlightInfo{code, date})
 	}
 

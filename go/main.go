@@ -29,16 +29,12 @@ func main() {
 	http.HandleFunc("/", defaultRoute)
 	http.HandleFunc("/go/search-flight", searchFlight)
 	http.HandleFunc("/go/add-flight", addFlight)
+	http.HandleFunc("/go/search-flight-user", searchFlightUser)
+	http.HandleFunc("/go/add-flight-user", addFlightUser)
 
 	// set listen port
 	err := http.ListenAndServe(":8091", nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
-}
-
-// flight info
-type FlightInfo struct {
-	Code string
-	Date string
 }
