@@ -41,14 +41,14 @@ function searchFlight(date) {
                 if (json.Flight.hasOwnProperty(key)) {
                     const f = json.Flight[key];
                     noFlight = false;
-                    html += "<label class='btn btn-outline-primary mr-2'><input type='radio' name='options' autocomplete='off'>" + f.Code + "</label>";
+                    html += "<label class='btn btn-outline-primary mr-2 mt-2'><input type='radio' name='options' autocomplete='off'>" + f.Code + "</label>";
                 }
             }
 
             if (noFlight) {
                 html = "<p class='mt-2'>这一天还没有航班记录呢</p>";
             } else {
-                html = "<p class='mt-2'>选择自己的航班</p>" + html;
+                html = "<p class='mt-2 mb-0'>选择自己的航班</p>" + html;
             }
 
             // modify flight result
