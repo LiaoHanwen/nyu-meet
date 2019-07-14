@@ -27,10 +27,17 @@ func defaultRoute(w http.ResponseWriter, r *http.Request) {
 func main() {
 	// set route
 	http.HandleFunc("/", defaultRoute)
+
+	// flight
 	http.HandleFunc("/go/search-flight", searchFlight)
 	http.HandleFunc("/go/add-flight", addFlight)
 	http.HandleFunc("/go/search-flight-user", searchFlightUser)
 	http.HandleFunc("/go/add-flight-user", addFlightUser)
+
+	// building
+	http.HandleFunc("/go/search-building", searchBuilding)
+	http.HandleFunc("/go/search-building-user", searchBuildingUser)
+	http.HandleFunc("/go/add-building-user", addBuildingUser)
 
 	// set listen port
 	err := http.ListenAndServe(":8091", nil)

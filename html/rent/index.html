@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--title setting-->
+    <title>nyu - 约楼~</title>
+
+    <!--favicon setting-->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#1b1b1b">
+    <meta name="apple-mobile-web-app-title" content="NYU 约~">
+    <meta name="application-name" content="NYU 约~">
+    <meta name="msapplication-TileColor" content="#1b1b1b">
+    <meta name="theme-color" content="#ffffff">
+
+    <!--bootstrap-->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!--navbar-->
+    <link rel="stylesheet" href="/template-navbar/navbar.css">
+</head>
+
+<body>
+    <!--navbar-->
+    <div id="navbar" current-page="rent">navbar loading</div>
+
+    <main class="container mt-4" role="main">
+        <div class="row">
+            <div class="col-12 col-md-6">
+
+                <!--building list-->
+                <div id="building-result-box" class="jumbotron pt-2 pb-4">
+                    <div id="building-result" class="mb-3 btn-group-toggle" data-toggle="buttons"></div>
+                    <hr class="my-3">
+                    <div class="">
+                        <p>没有找到大楼？ 添加自己的大楼名称吧</p>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">大楼名称</span>
+                            </div>
+                            <input id="building-name" type="text" class="form-control">
+                            <button id="add-building" type="button" class="btn btn-outline-success ml-3">添加</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+
+                <!--user list-->
+                <div id="building-user-result-box" class="jumbotron pt-2 pb-4">
+                    <div id="building-user-result" class="my-2"></div>
+                    <div class="row justify-content-between mx-0">
+                        <p>留下自己的联系方式 &ensp; 让更多人认识你</p>
+                        <div class="input-group mb-2 px-0 col-12 col-md-6">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">大楼名称</span>
+                            </div>
+                            <input id="building" type="text" class="form-control">
+                        </div>
+                        <div class="input-group mb-2 px-0 col-12 col-md-5">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">房间号</span>
+                            </div>
+                            <input id="room" type="text" class="form-control" placeholder="选填">
+                        </div>
+                        <div class="input-group mb-2">
+                            <textarea id="message" class="form-control" aria-label="With textarea"
+                                placeholder="可以写一点额外的消息哦  （选填）"></textarea>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">微信号</span>
+                            </div>
+                            <input id="wechat" type="text" class="form-control">
+                            <button id="add-building-user" type="button" class="btn btn-outline-success ml-3">提交</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!--bootstrap-->
+    <script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+    <!--navbar-->
+    <script src="/template-navbar/navbar.js"></script>
+
+    <!--action-->
+    <script src="action.js"></script>
+</body>
+
+</html>
