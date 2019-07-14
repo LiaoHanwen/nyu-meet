@@ -22,6 +22,10 @@ $(document).ready(function () {
         var wechat = $("#wechat").val();
         var message = $("#message").val();
 
+        if(wechat == "") {
+            alert("请填写微信号");
+        }
+
         addFlightUser(date, flight, wechat, message);
     });
 })
