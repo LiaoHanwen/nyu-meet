@@ -58,6 +58,9 @@
                     <div class="">
                         <p>没有找到航班号？ 添加自己的航班号吧</p>
                         <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">航班号</span>
+                            </div>
                             <input id="code" type="text" class="form-control">
                             <button id="add-flight" type="button" class="btn btn-outline-success ml-3">添加</button>
                         </div>
@@ -70,7 +73,7 @@
                 <div id="flight-user-result-box" class="jumbotron pt-2 pb-4" style="display: none;">
                     <div id="flight-user-result" class="my-2"></div>
                     <hr class="my-3">
-                    <div class="">
+                    <div>
                         <p>留下自己的联系方式 &ensp; 让更多人认识你</p>
                         <div class="input-group mb-2">
                             <textarea id="message" class="form-control" aria-label="With textarea"
@@ -100,7 +103,7 @@
 
     <!--navbar-->
     <script src="/template-navbar/navbar.js"></script>
-    
+
     <!--action-->
     <script src="action.js"></script>
 </body>
