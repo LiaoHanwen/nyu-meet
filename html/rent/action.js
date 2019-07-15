@@ -18,8 +18,8 @@ $(document).ready(function () {
         var room = $("#room").val();
         var wechat = $("#wechat").val();
         var message = $("#message").val();
-        
-        if(wechat == "") {
+
+        if (wechat == "") {
             setResult("错误", "请填写微信号");
             return;
         }
@@ -73,8 +73,8 @@ function searchBuildingUser(building) {
                     noUser = false;
                     html += "<p class='media-body pb-2 mb-0 lh-125'> \
                         <strong class='d-block text-gray-dark'>" + u.Wechat;
-                    
-                    if(u.Room != "") {
+
+                    if (u.Room != "") {
                         html += "  (" + u.Room + ")";
                     }
 
@@ -95,6 +95,8 @@ function searchBuildingUser(building) {
 }
 
 function addBuildingUser(building, room, wechat, message) {
+    $("#add-building-user").attr("disabled", true);
+
     // post
     $.post("/go/add-building-user",
         {
@@ -107,6 +109,7 @@ function addBuildingUser(building, room, wechat, message) {
             // request not success
             if (status != "success") {
                 setResult("错误", "服务器错误");
+                $("#add-building-user").attr("disabled", false);
                 return;
             }
 
@@ -115,11 +118,13 @@ function addBuildingUser(building, room, wechat, message) {
 
             if (json.Result != "Success") {
                 setResult("错误", "服务器错误");
+                $("#add-building-user").attr("disabled", false);
                 return;
             }
 
             searchBuildingUser(building);
             searchBuilding();
+            $("#add-building-user").attr("disabled", false);
             return;
         });
 }

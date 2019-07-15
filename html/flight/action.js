@@ -22,7 +22,7 @@ $(document).ready(function () {
         var wechat = $("#wechat").val();
         var message = $("#message").val();
 
-        if(wechat == "") {
+        if (wechat == "") {
             setResult("错误", "请填写微信号");
             return;
         }
@@ -70,6 +70,8 @@ function searchFlight(date) {
 }
 
 function addFlight(code, date) {
+    $("#add-flight").attr("disabled", true);
+
     // post
     $.post("/go/add-flight",
         {
@@ -80,6 +82,7 @@ function addFlight(code, date) {
             // request not success
             if (status != "success") {
                 setResult("错误", "服务器错误");
+                $("#add-flight").attr("disabled", false);
                 return;
             }
 
@@ -88,10 +91,12 @@ function addFlight(code, date) {
 
             if (json.Result != "Success") {
                 setResult("错误", "服务器错误");
+                $("#add-flight").attr("disabled", false);
                 return;
             }
 
             searchFlight(date);
+            $("#add-flight").attr("disabled", false);
             return;
         });
 }
@@ -129,6 +134,8 @@ function searchFlightUser(date, code) {
 }
 
 function addFlightUser(date, code, wechat, message) {
+    $("#add-flight-user").attr("disabled", true);
+
     // post
     $.post("/go/add-flight-user",
         {
@@ -141,6 +148,7 @@ function addFlightUser(date, code, wechat, message) {
             // request not success
             if (status != "success") {
                 setResult("错误", "服务器错误");
+                $("#add-flight-user").attr("disabled", false);
                 return;
             }
 
@@ -149,10 +157,12 @@ function addFlightUser(date, code, wechat, message) {
 
             if (json.Result != "Success") {
                 setResult("错误", "服务器错误");
+                $("#add-flight-user").attr("disabled", false);
                 return;
             }
 
             searchFlightUser(date, code);
+            $("#add-flight-user").attr("disabled", false);
             return;
         });
 }
