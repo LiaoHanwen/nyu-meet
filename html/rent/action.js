@@ -20,7 +20,7 @@ $(document).ready(function () {
         var message = $("#message").val();
         
         if(wechat == "") {
-            alert("请填写微信号");
+            setResult("错误", "请填写微信号");
             return;
         }
 
@@ -106,7 +106,7 @@ function addBuildingUser(building, room, wechat, message) {
         function (data, status) {
             // request not success
             if (status != "success") {
-                alert("服务器错误");
+                setResult("错误", "服务器错误");
                 return;
             }
 
@@ -114,7 +114,7 @@ function addBuildingUser(building, room, wechat, message) {
             var json = JSON.parse(data);
 
             if (json.Result != "Success") {
-                alert("服务器错误");
+                setResult("错误", "服务器错误");
                 return;
             }
 
@@ -122,4 +122,17 @@ function addBuildingUser(building, room, wechat, message) {
             searchBuilding();
             return;
         });
+}
+
+/*******************************************************************
+    func:   setResult
+    brief:  set modal and show
+*******************************************************************/
+function setResult(title, message) {
+    // set modal
+    $("#modal-title").text(title);
+    $("#modal-body").text(message);
+
+    // show modal
+    $("#result").modal('show');
 }

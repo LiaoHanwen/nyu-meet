@@ -23,7 +23,7 @@ $(document).ready(function () {
         var message = $("#message").val();
 
         if(wechat == "") {
-            alert("请填写微信号");
+            setResult("错误", "请填写微信号");
             return;
         }
 
@@ -79,7 +79,7 @@ function addFlight(code, date) {
         function (data, status) {
             // request not success
             if (status != "success") {
-                alert("服务器错误");
+                setResult("错误", "服务器错误");
                 return;
             }
 
@@ -87,7 +87,7 @@ function addFlight(code, date) {
             var json = JSON.parse(data);
 
             if (json.Result != "Success") {
-                alert("服务器错误");
+                setResult("错误", "服务器错误");
                 return;
             }
 
@@ -140,7 +140,7 @@ function addFlightUser(date, code, wechat, message) {
         function (data, status) {
             // request not success
             if (status != "success") {
-                alert("服务器错误");
+                setResult("错误", "服务器错误");
                 return;
             }
 
@@ -148,11 +148,24 @@ function addFlightUser(date, code, wechat, message) {
             var json = JSON.parse(data);
 
             if (json.Result != "Success") {
-                alert("服务器错误");
+                setResult("错误", "服务器错误");
                 return;
             }
 
             searchFlightUser(date, code);
             return;
         });
+}
+
+/*******************************************************************
+    func:   setResult
+    brief:  set modal and show
+*******************************************************************/
+function setResult(title, message) {
+    // set modal
+    $("#modal-title").text(title);
+    $("#modal-body").text(message);
+
+    // show modal
+    $("#result").modal('show');
 }
