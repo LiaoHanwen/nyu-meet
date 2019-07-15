@@ -18,6 +18,11 @@ $(document).ready(function () {
         var room = $("#room").val();
         var wechat = $("#wechat").val();
         var message = $("#message").val();
+        
+        if(wechat == "") {
+            alert("请填写微信号");
+            return;
+        }
 
         addBuildingUser(building, room, wechat, message);
     });

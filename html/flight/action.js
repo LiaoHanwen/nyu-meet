@@ -24,6 +24,7 @@ $(document).ready(function () {
 
         if(wechat == "") {
             alert("请填写微信号");
+            return;
         }
 
         addFlightUser(date, flight, wechat, message);
