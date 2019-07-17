@@ -7,6 +7,7 @@ package main
 import "fmt"
 import "net/http"
 import "encoding/json"
+import "strings"
 
 import "./Database"
 
@@ -35,21 +36,24 @@ func addFlight(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("date: ", date, ", code: ", code)
 
 	var response AddFlightResponse
-	result := true
 
 	// search
 	sql := "INSERT INTO `nyumeet`.`flight` (`code`, `date`) VALUES ('" + code + "', '" + date + "');"
 	_, err := Database.Excute(sql)
 	if err != nil {
 		fmt.Println("error: ", err)
-		result = false
+		if strings.HasPrefix (err.Error(), "Error 1062") {
+			// Duplicate entry
+			response.Result = "Fail"
+			response.Str = "Duplicate entry"
+		} else {
+			response.Result = "Fail"
+			response.Str = "Server error"
+		}
 	}
 
-	if result {
+	if response.Result == "" {
 		response.Result = "Success"
-	} else {
-		response.Result = "Fail"
-		response.Str = "Server error"
 	}
 
 	// output

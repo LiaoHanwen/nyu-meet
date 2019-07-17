@@ -124,6 +124,7 @@ function addBuildingUser(building, room, wechat, message) {
 
             searchBuildingUser(building);
             searchBuilding();
+            setResult("成功", "成功提交信息");
             $("#add-building-user").attr("disabled", false);
             return;
         });

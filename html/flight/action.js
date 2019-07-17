@@ -8,6 +8,12 @@ $(document).ready(function () {
         // get value
         var m = $("#month").val();
         var d = $("#date").val();
+
+        if (m == "" || d == "") {
+            setResult("错误", "请填写日期");
+            return;
+        }
+
         date = m + "-" + d;
 
         searchFlight(date);
@@ -15,6 +21,12 @@ $(document).ready(function () {
 
     $("#add-flight").click(function () {
         var c = $("#code").val().toUpperCase();
+
+        if (c == "") {
+            setResult("错误", "请填写航班号");
+            return;
+        }
+
         addFlight(c, date);
     });
 
@@ -90,12 +102,17 @@ function addFlight(code, date) {
             var json = JSON.parse(data);
 
             if (json.Result != "Success") {
-                setResult("错误", "服务器错误");
+                if (json.Str == "Duplicate entry") {
+                    setResult("错误", "航班号已存在");
+                } else {
+                    setResult("错误", "服务器错误");
+                }
                 $("#add-flight").attr("disabled", false);
                 return;
             }
 
             searchFlight(date);
+            setResult("成功", "成功添加航班");
             $("#add-flight").attr("disabled", false);
             return;
         });
@@ -162,6 +179,7 @@ function addFlightUser(date, code, wechat, message) {
             }
 
             searchFlightUser(date, code);
+            setResult("成功", "成功提交信息");
             $("#add-flight-user").attr("disabled", false);
             return;
         });
