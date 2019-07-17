@@ -16,7 +16,7 @@ $(document).ready(function () {
 
         date = m + "-" + d;
 
-        searchFlight(date);
+        searchFlight(date, "");
     });
 
     $("#add-flight").click(function () {
@@ -43,7 +43,7 @@ $(document).ready(function () {
     });
 })
 
-function searchFlight(date) {
+function searchFlight(date, code) {
     // get
     $.get("/go/search-flight",
         {
@@ -58,7 +58,7 @@ function searchFlight(date) {
                 if (json.Flight.hasOwnProperty(key)) {
                     const f = json.Flight[key];
                     noFlight = false;
-                    html += "<label class='btn btn-outline-primary mr-2 mt-2'><input type='radio' name='options' autocomplete='off'>" + f.Code + "</label>";
+                    html += "<label id='" + f.Code + "' class='btn btn-outline-primary mr-2 mt-2'><input type='radio' name='options' autocomplete='off'>" + f.Code + "</label>";
                 }
             }
 
@@ -76,6 +76,11 @@ function searchFlight(date) {
                 flight = $(this).text();
                 searchFlightUser(date, flight);
             });
+
+            // trigger button
+            if (code != "") {
+                $("#" + code).click();
+            }
 
             $("#flight-result-box").show(500);
         });
@@ -111,7 +116,7 @@ function addFlight(code, date) {
                 return;
             }
 
-            searchFlight(date);
+            searchFlight(date, code);
             setResult("成功", "成功添加航班");
             $("#add-flight").attr("disabled", false);
             return;
