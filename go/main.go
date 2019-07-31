@@ -30,9 +30,9 @@ func main() {
 
 	// flight
 	http.HandleFunc("/go/search-flight", searchFlight)
-	http.HandleFunc("/go/add-flight", addFlight)
 	http.HandleFunc("/go/search-flight-user", searchFlightUser)
 	http.HandleFunc("/go/add-flight-user", addFlightUser)
+	http.HandleFunc("/go/search-flight-time", searchFlightTime)
 
 	// building
 	http.HandleFunc("/go/search-building", searchBuilding)

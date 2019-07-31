@@ -20,8 +20,7 @@
     <meta name="theme-color" content="#ffffff">
 
     <!--bootstrap-->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 
     <!--navbar-->
     <link rel="stylesheet" href="/template-navbar/navbar.css">
@@ -32,63 +31,154 @@
     <div id="navbar" current-page="flight">navbar loading</div>
 
     <main class="container mt-4" role="main">
-        <div class="row">
-            <div class="col-12 col-md-6">
-
-                <!--search flight by date-->
-                <div class="jumbotron pt-4 pb-4 mb-2">
-                    <p>通过日期查找航班</p>
-                    <div class="input-group">
-                        <input id="month" type="number" class="form-control" oninput="value=value.replace(/[^\d]/g,'')">
-                        <div class="input-group-append">
-                            <span class="input-group-text">月</span>
-                        </div>
-                        <input id="date" type="number" class="form-control" oninput="value=value.replace(/[^\d]/g,'')">
-                        <div class="input-group-append">
-                            <span class="input-group-text">日</span>
-                        </div>
-                        <button id="search-flight" type="button" class="btn btn-outline-success ml-3">搜索</button>
-                    </div>
-                </div>
-
-                <!--select flight-->
-                <div id="flight-result-box" class="jumbotron pt-2 pb-4" style="display: none;">
-                    <div id="flight-result" class="mb-3 btn-group-toggle" data-toggle="buttons"></div>
-                    <hr class="my-3">
-                    <div class="">
-                        <p>没有找到航班号？ 添加自己的航班号吧</p>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">航班号</span>
+        <ul class="nav nav-pills mb-1" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-add-tab" data-toggle="pill" href="#pills-add" role="tab">填写个人信息</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-code-tab" data-toggle="pill" href="#pills-code" role="tab">通过航班号查找</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-time-tab" data-toggle="pill" href="#pills-time" role="tab">通过到达时间查找</a>
+            </li>
+        </ul>
+        <hr>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active row" id="pills-add" role="tabpanel" aria-labelledby="pills-home-tab">
+                <!--add info-->
+                <div class="col-12 col-md-6">
+                    <div class="jumbotron pt-2 pb-4">
+                        <div class="row justify-content-between mx-0">
+                            <p class="my-2 col-12">填写自己的信息 方便大家找到你~</p>
+                            <div class="input-group mb-2 px-0 col-12 col-md-6">
+                                <input id="add-month" type="number" class="form-control"
+                                    oninput="value=value.replace(/[^\d]/g,'')">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">月</span>
+                                </div>
+                                <input id="add-date" type="number" class="form-control"
+                                    oninput="value=value.replace(/[^\d]/g,'')">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">日</span>
+                                </div>
                             </div>
-                            <input id="code" type="text" class="form-control">
-                            <button id="add-flight" type="button" class="btn btn-outline-success ml-3">添加</button>
+                            <div class="input-group mb-2 px-0 col-12 col-md-5">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">航班号</span>
+                                </div>
+                                <input id="add-code" type="text" class="form-control">
+                            </div>
+                            <div class="input-group mb-2">
+                                <textarea id="add-message" class="form-control" aria-label="With textarea"
+                                    placeholder="可以写一点额外的消息哦  （选填）"></textarea>
+                            </div>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">微信号</span>
+                                </div>
+                                <input id="add-wechat" type="text" class="form-control">
+                                <button id="add-flight-user" type="button"
+                                    class="btn btn-outline-success ml-3">提交</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6">
-
-                <!--results-->
-                <div id="flight-user-result-box" class="jumbotron pt-2 pb-4" style="display: none;">
-                    <div id="flight-user-result" class="my-2"></div>
-                    <hr class="my-3">
-                    <div>
-                        <p>留下自己的联系方式 &ensp; 让更多人认识你</p>
-                        <div class="input-group mb-2">
-                            <textarea id="message" class="form-control" aria-label="With textarea"
-                                placeholder="可以写一点额外的消息哦  (选填）"></textarea>
-                        </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">微信号</span>
+            <div class="tab-pane fade row" id="pills-code" role="tabpanel">
+                <!--search flight by code-->
+                <div class="col-12 col-md-6">
+                    <div class="jumbotron pt-4 pb-4 mb-2">
+                        <div>
+                            <p class="my-2">通过航班号查找</p>
+                            <div class="input-group">
+                                <input id="code-month" type="number" class="form-control"
+                                    oninput="value=value.replace(/[^\d]/g,'')">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">月</span>
+                                </div>
+                                <input id="code-date" type="number" class="form-control"
+                                    oninput="value=value.replace(/[^\d]/g,'')">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">日</span>
+                                </div>
+                                <button id="code-search-flight" type="button"
+                                    class="btn btn-outline-success ml-3">查找</button>
                             </div>
-                            <input id="wechat" type="text" class="form-control">
-                            <button id="add-flight-user" type="button" class="btn btn-outline-success ml-3">提交</button>
+                        </div>
+                        <!--select flight-->
+                        <div id="code-flight-result-box" style="display: none;">
+                            <hr class="my-3">
+                            <div id="code-flight-result" class="mb-3 btn-group-toggle" data-toggle="buttons"></div>
+                        </div>
+                        <!--results-->
+                        <div id="code-flight-user-result-box" style="display: none;">
+                            <hr class="my-3">
+                            <div id="code-flight-user-result" class="my-2"></div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="tab-pane fade row" id="pills-time" role="tabpanel">
+                <!--search by time-->
+                <div class="col-12 col-md-6">
+                    <div class="jumbotron pt-2 pb-4">
+                        <div class="row justify-content-between mx-0">
+                            <p class="my-2 col-12">通过到达时间查找</p>
+                            <div class="input-group mb-2 px-0 col-12 col-md-6">
+                                <input id="time-month" type="number" class="form-control" placeholder="8"
+                                    oninput="value=value.replace(/[^\d]/g,'')">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">月</span>
+                                </div>
+                                <input id="time-date" type="number" class="form-control"
+                                    oninput="value=value.replace(/[^\d]/g,'')">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">日</span>
+                                </div>
+                            </div>
+                            <div class="input-group mb-2 px-0 col-12 col-md-5">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">到达机场</span>
+                                </div>
+                                <select class="custom-select" id="time-airport">
+                                    <option value="不限" selected>不限</option>
+                                    <option value="肯尼迪">肯尼迪</option>
+                                    <option value="纽瓦克">纽瓦克</option>
+                                </select>
+                            </div>
+                            <div class="input-group mb-2 px-0 col-12 col-md-9">
+                                <input id="time-start" type="number" class="form-control" placeholder="0"
+                                    oninput="value=value.replace(/[^\d]/g,'')">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">时</span>
+                                </div>
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">至</span>
+                                </div>
+                                <input id="time-end" type="number" class="form-control" placeholder="24"
+                                    oninput="value=value.replace(/[^\d]/g,'')">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">时</span>
+                                </div>
+                            </div>
+                            <div class="px-0 col-12 col-md-2">
+                                <button id="time-search" type="button"
+                                    class="btn btn-outline-success btn-block">查找</button>
+                            </div>
+                            <div id="time-result-box" class="col-12" style="display: none;">
+                                <hr class="my-3">
+                                <div id="time-result" class="my-2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--tips-->
+        <hr>
+        <div>
+            Tips：航班的起飞降落信息均为手动添加，所以刚提交的信息可能在“通过到达时间查找”中找不到，我会尽量及时更新航班信息，也可以主动通过主页的联系方式向我反馈 (～￣▽￣)～
         </div>
 
         <!--modal result-->
@@ -103,21 +193,18 @@
                     </div>
                     <div class="modal-body" id="modal-body">Loading</div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
                     </div>
                 </div>
             </div>
         </div>
+
     </main>
 
     <!--bootstrap-->
-    <script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.14.7/popper.min.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <!--navbar-->
     <script src="/template-navbar/navbar.js"></script>

@@ -41,7 +41,7 @@ func searchFlight(w http.ResponseWriter, r *http.Request) {
 	var response SearchFlightResponse
 
 	// search
-	sql := "SELECT * FROM `nyumeet`.`flight` WHERE date='" + date + "'"
+	sql := "SELECT DISTINCT code, date FROM `nyumeet`.`flight-user` WHERE date='" + date + "'"
 	rows, err := Database.Excute(sql)
 	if err != nil {
 		fmt.Println("error: ", err)

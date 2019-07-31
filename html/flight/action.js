@@ -1,13 +1,35 @@
-
-var date = "";
-var flight = "";
-
 $(document).ready(function () {
+    
+    $("#add-flight-user").click(function () {
+        var month = $("#add-month").val();
+        var day = $("#add-date").val();
+        var flight = $("#add-code").val().toUpperCase();
+        var wechat = $("#add-wechat").val();
+        var message = $("#add-message").val();
+        
+        if (month == "" || day == "") {
+            setResult("错误", "请填写出发日期");
+            return;
+        }
 
-    $("#search-flight").click(function () {
+        if (flight == "") {
+            setResult("错误", "请填写航班号");
+            return;
+        }
+
+        if (wechat == "") {
+            setResult("错误", "请填写微信号");
+            return;
+        }
+
+        var date = month + "-" + day;
+        addFlightUser(date, flight, wechat, message);
+    });
+
+    $("#code-search-flight").click(function () {
         // get value
-        var m = $("#month").val();
-        var d = $("#date").val();
+        var m = $("#code-month").val();
+        var d = $("#code-date").val();
 
         if (m == "" || d == "") {
             setResult("错误", "请填写日期");
@@ -19,27 +41,39 @@ $(document).ready(function () {
         searchFlight(date, "");
     });
 
-    $("#add-flight").click(function () {
-        var c = $("#code").val().toUpperCase();
+    $("#time-search").click(function () {
+        var month = $("#time-month").val();
+        var day = $("#time-date").val();
+        var airport = $("#time-airport").val();
+        var start = $("#time-start").val();
+        var end = $("#time-end").val();
+                
+        if (month == "") {
+            month="8";
+        }
 
-        if (c == "") {
-            setResult("错误", "请填写航班号");
+        if (day == "") {
+            setResult("错误", "请填写出发日期");
             return;
         }
 
-        addFlight(c, date);
-    });
-
-    $("#add-flight-user").click(function () {
-        var wechat = $("#wechat").val();
-        var message = $("#message").val();
-
-        if (wechat == "") {
-            setResult("错误", "请填写微信号");
-            return;
+        if(airport == "不限") {
+            airport = "";
         }
 
-        addFlightUser(date, flight, wechat, message);
+        if (start == "") {
+            start = "0";
+        }
+
+        if (end == "") {
+            end = "24";
+        }
+
+        var date = month + "-" + day;
+        start = start +":00";
+        end = end +":00";
+
+        searchFlightTime(date, airport, start, end);
     });
 })
 
@@ -69,10 +103,10 @@ function searchFlight(date, code) {
             }
 
             // modify flight result
-            $("#flight-result").html(html);
+            $("#code-flight-result").html(html);
 
             // add click event
-            $("#flight-result").on("click", "label", function () {
+            $("#code-flight-result").on("click", "label", function () {
                 flight = $(this).text();
                 searchFlightUser(date, flight);
             });
@@ -82,44 +116,7 @@ function searchFlight(date, code) {
                 $("#" + code).click();
             }
 
-            $("#flight-result-box").show(500);
-        });
-}
-
-function addFlight(code, date) {
-    $("#add-flight").attr("disabled", true);
-
-    // post
-    $.post("/go/add-flight",
-        {
-            code: code,
-            date: date
-        },
-        function (data, status) {
-            // request not success
-            if (status != "success") {
-                setResult("错误", "服务器错误");
-                $("#add-flight").attr("disabled", false);
-                return;
-            }
-
-            // parse data to json object
-            var json = JSON.parse(data);
-
-            if (json.Result != "Success") {
-                if (json.Str == "Duplicate entry") {
-                    setResult("错误", "航班号已存在");
-                } else {
-                    setResult("错误", "服务器错误");
-                }
-                $("#add-flight").attr("disabled", false);
-                return;
-            }
-
-            searchFlight(date, code);
-            setResult("成功", "成功添加航班");
-            $("#add-flight").attr("disabled", false);
-            return;
+            $("#code-flight-result-box").show(500);
         });
 }
 
@@ -150,8 +147,8 @@ function searchFlightUser(date, code) {
             }
 
             // show flight result
-            $("#flight-user-result").html(html);
-            $("#flight-user-result-box").show(500);
+            $("#code-flight-user-result").html(html);
+            $("#code-flight-user-result-box").show(500);
         });
 }
 
@@ -183,9 +180,57 @@ function addFlightUser(date, code, wechat, message) {
                 return;
             }
 
-            searchFlightUser(date, code);
             setResult("成功", "成功提交信息");
             $("#add-flight-user").attr("disabled", false);
+            return;
+        });
+}
+
+function searchFlightTime(date, airport, start, end) {
+    $("#time-search").attr("disabled", true);
+
+    // post
+    $.post("/go/search-flight-time",
+        {
+            date: date,
+            airport: airport,
+            start: start,
+            end: end
+        },
+        function (data, status) {
+            // request not success
+            if (status != "success") {
+                setResult("错误", "服务器错误");
+                $("#time-search").attr("disabled", false);
+                return;
+            }
+
+            // parse data to json object
+            var json = JSON.parse(data);
+
+            html = "";
+            var noUser = true;
+            for (const key in json.User) {
+                if (json.User.hasOwnProperty(key)) {
+                    const u = json.User[key];
+                    noUser = false;
+                    var strong = u.Wechat;
+                    var s = u.Code + " &emsp; " + u.Dep + "-" + u.Arr + " &emsp; " + u.DepTime + "-" + u.ArrTime + "<br>" + u.Message;
+                    html += "<p class='media-body pb-2 mb-0 lh-125'> \
+                        <strong class='d-block text-gray-dark'>" + strong + "</strong> \
+                        " + s + "</p>";
+                }
+            }
+
+            if (noUser) {
+                html = "<p class='mt-2'>没有查询到结果</p>";
+            }
+
+            // show flight result
+            $("#time-result").html(html);
+            $("#time-result-box").show(500);
+
+            $("#time-search").attr("disabled", false);
             return;
         });
 }
